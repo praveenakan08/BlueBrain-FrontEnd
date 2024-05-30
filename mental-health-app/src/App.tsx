@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-import Login from "./components/Login";
+import Login from "./container/Login";
 import Home from "./container/Home";
-import Dashboard from "./components/Dashboard";
-import Registration from "./components/Registration";
-import Questionnaire from "./components/Questionnaire";
+import Dashboard from "./container/Dashboard";
+import Registration from "./container/Registration";
+import Questionnaire from "./container/Questionnaire";
 
 const App = () => {
   return (

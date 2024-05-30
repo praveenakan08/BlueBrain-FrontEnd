@@ -1,8 +1,15 @@
 module.exports = {
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/**/*.html"],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      colors: {
+        bbPink: '#F2DFEB',
+        bbSky: '#AEDFF2',
+        bbAqua: '#72DBF2',
+        bbYellow: '#F2C879',
+        bbSand: '#F2D8A7',
+      },
       margin: {
         320: "320px",
       },
@@ -15,6 +22,9 @@ module.exports = {
         656: "656px",
         880: "880px",
         508: "508px",
+      },
+      fontFamily: {
+        'poppins': ['Poppins'],
       },
       height: {
         80: "80px",
@@ -48,6 +58,11 @@ module.exports = {
         mainColor: "#FBF8F9",
         secondaryColor: "#F0F0F0",
         blackOverlay: "rgba(0, 0 ,0 ,0.7)",
+        bbPink: '#F2DFEB',
+        bbSky: '#AEDFF2',
+        bbAqua: '#72DBF2',
+        bbYellow: '#F2C879',
+        bbSand: '#F2D8A7'
       },
       keyframes: {
         "slide-in": {
@@ -88,7 +103,8 @@ module.exports = {
   },
   variants: {
     // backgroundColor: ['active'],
-    extend: {},
+    extend: {
+    },
   },
   plugins: [],
 };

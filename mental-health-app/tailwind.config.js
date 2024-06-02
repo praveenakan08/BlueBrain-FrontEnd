@@ -3,6 +3,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+
+      gridTemplateColumns: {
+        'auto': 'repeat(auto-fit, minmax(250px, 1fr))',
+      },
       colors: {
         bbPink: '#F2DFEB',
         bbSky: '#AEDFF2',

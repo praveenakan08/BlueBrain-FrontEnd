@@ -1,8 +1,6 @@
 import { useState } from "react";
 import MyJournal from "./MyJournal";
 import MyMoodTracker from "./MyMoodTracker";
-import MyMeditation from "./MyMeditation";
-import MyMedia from "./MyMedia";
 
 const Dashboard = (): JSX.Element => {
   const [activeComponent, setActiveComponent] = useState(null);
@@ -38,19 +36,13 @@ const Dashboard = (): JSX.Element => {
 
         {/* navigation bar items */}
         <div className="nav-links duration-500 bg-gray-200 absolute w-full flex items-center min-h-[35vh] left-0 top-[-100%] md:static md:min-h-fit md:w-auto">
-          <ul className="flex flex-col gap-10 md:flex-row">
-            <li>
-              <button className="btn" onClick={() => handleClick("Journal")}> My Journal </button>
+          <ul className="flex flex-col gap-10 md:flex-row border-b">
+            <li className="-mb-px mr-1">
+              <button className="btn bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-700 font-semibold" onClick={() => handleClick("Journal")}> My Journal </button>
             </li>
-            
             <li>
               <button className="btn" onClick={() => handleClick("MoodTracker")}> My Mood Tracker </button>
             </li>
-
-            <li>
-            <button className="btn" onClick={() => handleClick("Meditation")}> My Meditation </button>
-            </li>
-
             <li>
             <button className="btn" onClick={() => handleClick("Media")}> My Media </button>
             </li>
@@ -92,9 +84,10 @@ const Dashboard = (): JSX.Element => {
         </div>
       </nav>
 
-      {/* body */}
-      <div className="pr-[15px] pl-[15px] pt-[15px] flex-1 overflow-y-auto">
-        {(activeComponent === "Journal" && <MyJournal />)}
+      {/* body {/* {(activeComponent === "Journal" && <MyJournal/>) || */}
+      <div className="pr-[15px] pl-[15px] flex-1 overflow-y-auto">
+        {(activeComponent === "Journal" && <MyJournal/>) || 
+        (activeComponent === "MoodTracker" && <MyMoodTracker/>)}
       </div>
     </div>
   );

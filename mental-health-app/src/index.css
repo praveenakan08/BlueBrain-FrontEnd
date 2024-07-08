@@ -11,6 +11,10 @@
     box-sizing: border-box;
 }
 
+.selected {
+    @apply border border-gray-500 shadow-lg rounded-lg
+}
+
 .note {
     @apply rounded-lg p-[1rem] min-h-[250px] flex flex-col justify-between max-w-[980px]
 }

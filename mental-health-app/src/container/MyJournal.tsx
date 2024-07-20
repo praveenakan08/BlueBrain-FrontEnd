@@ -35,7 +35,7 @@ const MyJournal = (): JSX.Element => {
     }
     
     return (
-        <div className="grid gap-[1rem] grid-cols-auto">  
+        <div className="grid gap-[1rem] grid-cols-auto mt-5">  
             {notes?.map((note) => (
                 <Note key={note.id} 
                       id={note.id} 

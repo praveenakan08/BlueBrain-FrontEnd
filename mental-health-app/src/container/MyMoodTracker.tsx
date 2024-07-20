@@ -69,17 +69,7 @@ const MyMoodTracker = (): JSX.Element => {
                     SAVE
                 </button>
 
-                <TodayMoodTrackerModal open={open} onClose={() => setOpen(false)}>
-                    <div className="text-center w-56">
-                        Hello
-                    </div>
-                    <div className="mx-auto my-4 w-48">
-                        <h3 className="text-lg font-black text-gray-800">
-                            Content~
-                        </h3>
-                    </div>
-
-                </TodayMoodTrackerModal>
+                <TodayMoodTrackerModal open={open} onClose={() => setOpen(false)}></TodayMoodTrackerModal>
             </div>
         </div>
 

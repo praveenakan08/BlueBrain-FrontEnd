@@ -3,10 +3,10 @@ import MyJournal from "./MyJournal";
 import MyMoodTracker from "./MyMoodTracker";
 
 const Dashboard = (): JSX.Element => {
-  const [activeComponent, setActiveComponent] = useState(null);
+  const [activeComponent, setActiveComponent] = useState('');
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  
-  const handleClick = (component: any) => {
+
+  const handleClick = (component: string) => {
     setActiveComponent(component);
   };
 
@@ -38,13 +38,28 @@ const Dashboard = (): JSX.Element => {
         <div className="nav-links duration-500 bg-gray-200 absolute w-full flex items-center min-h-[35vh] left-0 top-[-100%] md:static md:min-h-fit md:w-auto">
           <ul className="flex flex-col gap-10 md:flex-row border-b">
             <li className="-mb-px mr-1">
-              <button className="btn bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-700 font-semibold" onClick={() => handleClick("Journal")}> My Journal </button>
+              <button
+                className={`btn inline-block border-l border-t border-r rounded-t py-2 px-4 font-semibold ${activeComponent === "Journal" ? "bg-white text-blue-700" : "bg-gray-200 text-gray-700"}`}
+                onClick={() => handleClick("Journal")}
+              >
+                My Journal
+              </button>
             </li>
             <li>
-              <button className="btn" onClick={() => handleClick("MoodTracker")}> My Mood Tracker </button>
+              <button
+                className={`btn py-2 px-4 font-semibold ${activeComponent === "MoodTracker" ? "bg-white text-blue-700" : "bg-gray-200 text-gray-700"}`}
+                onClick={() => handleClick("MoodTracker")}
+              >
+                My Mood Tracker
+              </button>
             </li>
             <li>
-            <button className="btn" onClick={() => handleClick("Media")}> My Media </button>
+              <button
+                className={`btn py-2 px-4 font-semibold ${activeComponent === "Media" ? "bg-white text-blue-700" : "bg-gray-200 text-gray-700"}`}
+                onClick={() => handleClick("Media")}
+              >
+                My Media
+              </button>
             </li>
           </ul>
         </div>
@@ -74,7 +89,6 @@ const Dashboard = (): JSX.Element => {
                 <li>
                   <a href="#" className="block px-4 py-2 hover:bg-gray-100">My Profile</a>
                 </li>
-                
                 <li>
                   <a href="#" className="block px-4 py-2 hover:bg-gray-100">Log Out</a>
                 </li>
@@ -84,8 +98,8 @@ const Dashboard = (): JSX.Element => {
         </div>
       </nav>
 
-      {/* body {/* {(activeComponent === "Journal" && <MyJournal/>) || */}
-      <div className="pr-[15px] pl-[15px] flex-1 overflow-y-auto">
+      {/* body */}
+      <div className="pr-4 pl-4 flex-1 overflow-y-auto">
         {(activeComponent === "Journal" && <MyJournal/>) || 
         (activeComponent === "MoodTracker" && <MyMoodTracker/>)}
       </div>

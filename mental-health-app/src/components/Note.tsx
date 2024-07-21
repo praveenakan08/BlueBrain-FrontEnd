@@ -12,7 +12,7 @@ const Note = ({key, id, text, date, handleDeleteNote}: NoteProps): JSX.Element =
     }
 
     return (
-        <div className="note bg-[#FEF1B8] shadow-lg">
+        <div className="note bg-bbPink shadow-lg">
             <span>{text}</span>
 
             <div className="note-footer">

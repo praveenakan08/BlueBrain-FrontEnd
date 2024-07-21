@@ -20,9 +20,9 @@ const AddNote = ({handleNewNote}: AddNoteProps): JSX.Element => {
     }
 
     return (
-        <div className="note bg-green-300 shadow-lg">
+        <div className="note bg-gray-200 shadow-lg">
             <textarea 
-                className="focus:outline-none resize-none bg-green-300" 
+                className="focus:outline-none resize-none bg-gray-200" 
                 rows={8} cols={10} 
                 placeholder="What's on your mind today?"
                 value={noteContent}

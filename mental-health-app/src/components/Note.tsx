@@ -1,30 +1,74 @@
+import { useState } from 'react';
+
 interface NoteProps {
-    key: string,
-    id: string,
-    text: string,
-    date: string,
-    handleDeleteNote: (id: string) => void;
+  id: string;
+  title: string;
+  content: string;
+  date: string;
+  onDelete: (id: string) => void;
+  onEdit: (id: string, updatedNote: { title: string; content: string }) => void;
 }
 
-const Note = ({key, id, text, date, handleDeleteNote}: NoteProps): JSX.Element => {
-    const handleDeleteClick = () => {
-        handleDeleteNote(id);
-    }
+export default function Note({ id, title, content, date, onDelete, onEdit }: NoteProps) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState(title);
+  const [editContent, setEditContent] = useState(content);
 
-    return (
-        <div className="note bg-bbPink shadow-lg">
-            <span>{text}</span>
+  const handleSave = () => {
+    onEdit(id, { title: editTitle, content: editContent });
+    setIsEditing(false);
+  };
 
-            <div className="note-footer">
-                <small>{date}</small>
-                <button className="btn cursor:pointer" onClick={handleDeleteClick}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    );
+  return (
+    <div className="bg-gray-100 border border-gray-300 rounded-xl p-5 shadow-md hover:shadow-lg transition-all space-y-3">
+      {isEditing ? (
+        <>
+          <input
+            className="w-full p-2 rounded-md border border-gray-300 shadow-sm"
+            value={editTitle}
+            onChange={(e) => setEditTitle(e.target.value)}
+          />
+          <textarea
+            className="w-full p-2 h-24 rounded-md border border-gray-300 shadow-sm"
+            value={editContent}
+            onChange={(e) => setEditContent(e.target.value)}
+          />
+          <div className="flex justify-between mt-2">
+            <button
+              onClick={handleSave}
+              className="bg-sky-300 text-white hover:shadow-inner shadow-lg px-4 py-1 rounded"
+            >
+              Save
+            </button>
+            <button
+              onClick={() => setIsEditing(false)}
+              className="bg-gray-400 text-white hover:bg-gray-500 px-4 py-1 rounded"
+            >
+              Cancel
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <h3 className="text-xl font-bold text-gray-800">{title}</h3>
+          <p className="text-gray-700 whitespace-pre-line">{content}</p>
+          <div className="text-xs text-gray-500">🕒 {date}</div>
+          <div className="flex justify-end space-x-4 mt-2">
+            <button
+              onClick={() => setIsEditing(true)}
+              className="text-blue-700 font-medium hover:underline text-sm"
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => onDelete(id)}
+              className="text-red-600 font-medium hover:underline text-sm"
+            >
+              Delete
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
 }
-
-export default Note;

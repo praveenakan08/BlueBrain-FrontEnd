@@ -1,68 +1,86 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import Password from "../components/Password";
 
 const Login = (): JSX.Element => {
-  const history = useNavigate();
+  const navigate = useNavigate();
 
-  const navigateToDashboard = () => {
-    history("/dashboard");
+  // Controlled inputs
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // You can add actual login logic here (API call, validation, etc)
+    // For now, just navigate to dashboard
+    if (email && password) {
+      navigate("/dashboard");
+    }
   };
+
   return (
     <div className="grid md:grid-cols-3 bg-gradient-to-t from-bbPink to-bbSky h-screen">
       <div className="col-span-1"></div>
-      <div className="flex justify-center items-center flex-col bg-gray-300 h-screen col-span-1">
+
+      <div className="flex justify-center items-center flex-col bg-gray-300 h-screen col-span-1 px-6">
         {/* logo image and title */}
         <div className="flex items-center flex-col m-6">
-          <div>
-            <img
-              className="drop-shadow-2xl m-2"
-              src="/images/logo.png"
-              alt="LOGO"
-            ></img>
-          </div>
-          <div className="logo">blue brain</div>
+          <img
+            className="drop-shadow-2xl m-2"
+            src="/images/logo.png"
+            alt="LOGO"
+          />
+          <div className="logo text-2xl font-bold select-none">blue brain</div>
         </div>
 
-        {/* email address */}
-        <div className="mb-6 inline-block w-2/3">
+        {/* Login form */}
+        <form onSubmit={handleLogin} className="w-full max-w-md flex flex-col items-center gap-6">
+          {/* email address */}
           <input
             type="email"
             id="email"
-            className="input shadow"
+            className="input shadow w-full"
             placeholder="Email address"
             required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
           />
-        </div>
 
-        {/* password */}
-        <div className="flex mb-6 w-2/3 gap-3">
-          <Password placeholder={"Password"} />
-        </div>
+          {/* password */}
+          <Password
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <div className="mb-6">
-          {/* forgot password? */}
-          <a href="/forgot-password" className="text-xs font-bold justify-end">
-            Forgot Password?
-          </a>
-        </div>
+          {/* forgot password */}
+          <div className="w-full flex justify-end">
+            <Link to="/forgot-password" className="text-xs font-bold underline text-blue-700 hover:text-blue-900">
+              Forgot Password?
+            </Link>
+          </div>
 
-        {/* log-in button */}
-        <div className="mb-6 w-2/3">
+          {/* log-in button */}
           <button
-            className="btn bg-sky-300 text-white hover:shadow-inner shadow-lg w-full"
-            onClick={navigateToDashboard}
+            type="submit"
+            className="btn bg-sky-300 text-white hover:shadow-inner shadow-lg w-full py-2 rounded"
+            disabled={!email || !password}
           >
             Log in
           </button>
-        </div>
 
-        {/* navigate to sign up page */}
-        <div>
-          <a href="/signup" className="text-xs font-bold justify-end">
-            First Time User? Sign Up Here
-          </a>
-        </div>
+          {/* navigate to sign up page */}
+          <div className="text-xs font-bold mt-2">
+            First Time User?{" "}
+            <Link to="/signup" className="underline text-blue-700 hover:text-blue-900">
+              Sign Up Here
+            </Link>
+          </div>
+        </form>
       </div>
+
       <div className="col-span-1"></div>
     </div>
   );

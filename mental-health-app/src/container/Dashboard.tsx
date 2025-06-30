@@ -1,110 +1,78 @@
-import { useState } from "react";
-import MyJournal from "./MyJournal";
-import MyMoodTracker from "./MyMoodTracker";
+import { Link } from "react-router-dom";
 
-const Dashboard = (): JSX.Element => {
-  const [activeComponent, setActiveComponent] = useState('');
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-
-  const handleClick = (component: string) => {
-    setActiveComponent(component);
-  };
-
-  const handleMenu = () => {
-    const navLinks = document.querySelector('.nav-links');
-
-    if(navLinks) {
-      navLinks.classList.toggle('top-[5%]');
-    }
-  }
-
-  const handleProfileDropdown = () => {
-    setIsProfileOpen(!isProfileOpen);
-  }
-
+export default function Dashboard() {
   return (
-    <div className="bg-gradient-to-t from-bbPink to-bbSky min-h-screen flex flex-col">
-      {/*top navigation */}
-      <nav className="bg-gray-200 flex gap-4 justify-between items-center">
-        {/* logo */}
-        <div className="flex gap-4 items-center">
-          <div>
-            <img className="w-16" src="/images/logo.png" alt="logo" />
-          </div>
-          <div className="logo">blue brain</div>
+    <div className="min-h-screen bg-gradient-to-t from-bbPink to-bbSky flex flex-col items-center px-6 py-12 relative">
+      {/* Top right menu container */}
+      <div className="w-full max-w-3xl flex justify-end gap-3 mb-6">
+        <Link
+          to="/profile"
+          className="bg-sky-300 text-white px-3 py-1 rounded hover:bg-sky-400 shadow-md text-sm"
+        >
+          View Profile
+        </Link>
+        <button
+          onClick={() => {
+            // logout logic here
+            console.log("Logging out...");
+          }}
+          className="bg-red-400 text-white px-3 py-1 rounded hover:bg-red-500 shadow-md text-sm"
+        >
+          Logout
+        </button>
+      </div>
+
+      {/* Main dashboard card */}
+      <div className="w-full max-w-3xl bg-gray-300 rounded-xl p-8 shadow-lg space-y-8">
+        <h1 className="text-3xl font-bold text-center text-indigo-700 select-none">
+          Welcome to BlueBrain 💙
+        </h1>
+        <p className="text-center text-gray-700 text-lg">
+          A self-help space for your mental well-being.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
+          <Card
+            title="📝 My Journal"
+            link="/journal"
+            description="Write, reflect, and track your thoughts."
+          />
+          <Card
+            title="😊 Mood Tracker"
+            link="/mood-tracker"
+            description="Track how you feel day-to-day."
+          />
+          <Card
+            title="📺 Media Hub"
+            link="/media"
+            description="Helpful content based on how you feel."
+          />
+          <Card
+            title="💬 Chat Bot"
+            link="/chat"
+            description="Vent to a mental-health-focused companion."
+          />
         </div>
-
-        {/* navigation bar items */}
-        <div className="nav-links duration-500 bg-gray-200 absolute w-full flex items-center min-h-[35vh] left-0 top-[-100%] md:static md:min-h-fit md:w-auto">
-          <ul className="flex flex-col gap-10 md:flex-row border-b">
-            <li className="-mb-px mr-1">
-              <button
-                className={`btn inline-block border-l border-t border-r rounded-t py-2 px-4 font-semibold ${activeComponent === "Journal" ? "bg-white text-blue-700" : "bg-gray-200 text-gray-700"}`}
-                onClick={() => handleClick("Journal")}
-              >
-                My Journal
-              </button>
-            </li>
-            <li>
-              <button
-                className={`btn py-2 px-4 font-semibold ${activeComponent === "MoodTracker" ? "bg-white text-blue-700" : "bg-gray-200 text-gray-700"}`}
-                onClick={() => handleClick("MoodTracker")}
-              >
-                My Mood Tracker
-              </button>
-            </li>
-            <li>
-              <button
-                className={`btn py-2 px-4 font-semibold ${activeComponent === "Media" ? "bg-white text-blue-700" : "bg-gray-200 text-gray-700"}`}
-                onClick={() => handleClick("Media")}
-              >
-                My Media
-              </button>
-            </li>
-          </ul>
-        </div>
-        
-        <div className="flex items-center">
-          {/* dashboard menu */}
-          <div className="cursor-pointer md:hidden">
-            <svg onClick={handleMenu} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
-          </div>
-
-          {/* profile */}
-          <div className="relative navbar-item">
-            <button onClick={handleProfileDropdown} className="px-5 py-2.5 text-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-              </svg>
-            </button>
-
-            {/* profile dropdown menu */}
-            <div className={`bg-gray-200 divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-full right-0
-                  ${
-                    isProfileOpen ? "block" : "hidden"
-                  }`}>
-              <ul className="py-2 text-sm">
-                <li>
-                  <a href="#" className="block px-4 py-2 hover:bg-gray-100">My Profile</a>
-                </li>
-                <li>
-                  <a href="#" className="block px-4 py-2 hover:bg-gray-100">Log Out</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* body */}
-      <div className="pr-4 pl-4 flex-1 overflow-y-auto">
-        {(activeComponent === "Journal" && <MyJournal/>) || 
-        (activeComponent === "MoodTracker" && <MyMoodTracker/>)}
       </div>
     </div>
   );
-};
+}
 
-export default Dashboard;
+function Card({
+  title,
+  description,
+  link,
+}: {
+  title: string;
+  description: string;
+  link: string;
+}) {
+  return (
+    <Link to={link}>
+      <div className="bg-gray-100 hover:bg-gray-200 transition-colors rounded-lg shadow-md hover:shadow-lg p-5 cursor-pointer border border-gray-300">
+        <h2 className="text-xl font-semibold text-indigo-700">{title}</h2>
+        <p className="text-gray-600">{description}</p>
+      </div>
+    </Link>
+  );
+}

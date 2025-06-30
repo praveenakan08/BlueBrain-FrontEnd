@@ -1,28 +1,36 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 
-interface PasswordType {
-    placeholder: string;
+interface PasswordProps {
+  placeholder: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  // optional id or name props can be added if needed
 }
 
-const Password = ({placeholder}: PasswordType): JSX.Element => {
+const Password = ({ placeholder, value, onChange }: PasswordProps): JSX.Element => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const handlePasswordVisible = () => {
-    setIsPasswordVisible(!isPasswordVisible);
+    setIsPasswordVisible((prev) => !prev);
   };
+
   return (
     <div className="relative w-full">
       <input
         type={isPasswordVisible ? "text" : "password"}
-        id="hs-toggle-password"
-        className="input shadow-sm w-2/3 pr-10"
+        className="input shadow-sm w-full pr-10"
         placeholder={placeholder}
         required
+        value={value}
+        onChange={onChange}
+        aria-label={placeholder}
+        autoComplete="new-password"
       />
-
       <button
+        type="button"
         onClick={handlePasswordVisible}
         className="absolute inset-y-0 right-0 pr-3 flex items-center"
+        aria-label={isPasswordVisible ? "Hide password" : "Show password"}
       >
         {!isPasswordVisible ? (
           <svg
@@ -31,7 +39,7 @@ const Password = ({placeholder}: PasswordType): JSX.Element => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-6"
+            className="w-6 h-6"
           >
             <path
               strokeLinecap="round"
@@ -51,7 +59,7 @@ const Password = ({placeholder}: PasswordType): JSX.Element => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-6"
+            className="w-6 h-6"
           >
             <path
               strokeLinecap="round"

@@ -3,24 +3,48 @@ import { useNavigate } from "react-router-dom";
 import Password from "../components/Password";
 
 const Registration = (): JSX.Element => {
-  const navigate = useNavigate(); // Updated to useNavigate() correctly
+  const navigate = useNavigate();
+
+  // Controlled form state
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const navigateToDashboard = () => {
-    navigate("/dashboard"); // Fixed navigate usage
+  const handlePasswordVisible = () => {
+    setIsPasswordVisible((prev) => !prev);
   };
 
-  const handlePasswordVisible = () => {
-    setIsPasswordVisible(!isPasswordVisible);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Basic validation
+    if (!firstName || !lastName || !age || !gender || !email || !password || !confirmPassword) {
+      alert("Please fill all fields.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+    if (Number(age) <= 0 || isNaN(Number(age))) {
+      alert("Please enter a valid age.");
+      return;
+    }
+
+    // You can do registration logic here (API call etc.)
+
+    // Navigate on success
+    navigate("/dashboard");
   };
 
   return (
-    <div className="grid md:grid-cols-3 bg-gradient-to-t from-bbPink to-bbSky h-screen">
-      {/* Empty space - left */}
-      <div className="col-span-1"></div>
-
-      {/* Center part */}
-      <div className="flex flex-col justify-center items-center bg-gray-300 h-screen col-span-1 overflow-hidden">
+    <div className="bg-gradient-to-t from-bbPink to-bbSky min-h-screen flex justify-center items-center p-6">
+      <div className="bg-gray-300 w-full max-w-md p-8 rounded-lg shadow-lg overflow-hidden">
         {/* logo image and title */}
         <div className="flex flex-col items-center mb-8">
           <img
@@ -32,63 +56,76 @@ const Registration = (): JSX.Element => {
         </div>
 
         {/* Form */}
-        <div className="flex flex-col w-3/4 max-w-md">
-          {/* first name, last name */}
+        <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
           <input
             id="firstName"
-            className="input shadow mb-4"
+            className="input shadow"
             placeholder="First Name"
             required
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
           />
           <input
             id="lastName"
-            className="input shadow mb-4"
+            className="input shadow"
             placeholder="Last Name"
             required
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
           />
 
-          <div className="flex gap-4 mb-4">
+          <div className="flex gap-4">
             <input
               id="age"
-              className="input shadow-sm w-1/2"
+              type="number"
+              className="input shadow w-1/2"
               placeholder="Age"
               required
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              min={1}
             />
             <input
               id="gender"
-              className="input shadow-sm w-1/2"
+              className="input shadow w-1/2"
               placeholder="Gender"
               required
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
             />
           </div>
 
-          {/* email address */}
           <input
             type="email"
             id="email"
-            className="input shadow mb-4"
+            className="input shadow"
             placeholder="Email address"
             required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
-          {/* password fields */}
-          <div className="flex flex-col gap-4 mb-4">
-          <Password placeholder={'Password'}/>
-          <Password placeholder={'Confirm Password'}/>
+          <div className="flex flex-col gap-4">
+              <Password
+    placeholder="Password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+  />
+              <Password
+    placeholder="Confirm Password"
+    value={confirmPassword}
+    onChange={(e) => setConfirmPassword(e.target.value)}
+  />
           </div>
 
-          {/* navigate to dashboard */}
           <button
-            className="btn bg-sky-300 text-white hover:bg-sky-400 shadow-lg w-full py-2 rounded"
-            onClick={navigateToDashboard}
+            type="submit"
+            className="btn bg-sky-300 text-white hover:bg-sky-400 shadow-lg py-2 rounded mt-4"
           >
             Sign Up
           </button>
-        </div>
+        </form>
       </div>
-
-      {/* Empty space - right */}
-      <div className="col-span-1"></div>
     </div>
   );
 };

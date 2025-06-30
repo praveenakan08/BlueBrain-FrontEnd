@@ -13,6 +13,10 @@ module.exports = {
         bbAqua: '#72DBF2',
         bbYellow: '#F2C879',
         bbSand: '#F2D8A7',
+        yellow: {
+        50: '#fefce8',
+        100: '#fef9c3',
+      },
       },
       margin: {
         320: "320px",

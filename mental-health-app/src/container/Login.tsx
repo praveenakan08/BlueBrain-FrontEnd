@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Password from "../components/Password";
+import { loginUser } from "../api/login";
 
 const Login = (): JSX.Element => {
   const navigate = useNavigate();
@@ -12,10 +13,20 @@ const Login = (): JSX.Element => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // You can add actual login logic here (API call, validation, etc)
-    // For now, just navigate to dashboard
+    callLoginApi();
+
     if (email && password) {
       navigate("/dashboard");
+    }
+  };
+
+  const callLoginApi = async () => {
+   try {
+    const data = await loginUser({ email, password });
+    localStorage.setItem("token", data.token);
+    navigate("/dashboard");
+    } catch (err: any) {
+      alert("Login failed: " + err.response?.data?.message || err.message);
     }
   };
 

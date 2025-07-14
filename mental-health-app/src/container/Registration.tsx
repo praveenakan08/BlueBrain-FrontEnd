@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Password from "../components/Password";
+import { registerUser } from "../api/register";
 
 const Registration = (): JSX.Element => {
   const navigate = useNavigate();
@@ -36,10 +37,17 @@ const Registration = (): JSX.Element => {
       return;
     }
 
-    // You can do registration logic here (API call etc.)
+    handleRegister();
+  };
 
-    // Navigate on success
-    navigate("/dashboard");
+  const handleRegister = async () => {
+    try {
+      const data = await registerUser({ firstName, lastName, email, password, age, gender });
+      localStorage.setItem("token", data.accessToken);
+      navigate("/dashboard");
+    } catch (err: any) {
+      alert("Registration failed: " + err.response?.data?.message || err.message);
+    }
   };
 
   return (
